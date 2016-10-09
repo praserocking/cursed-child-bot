@@ -12,7 +12,11 @@ acts.each do |act|
 	act_exchanges = []
 	act.each do |exchange|
 		exc = exchange.split(":")[1] if exchange.include? ":"
-		act_exchanges << exc.lstrip.rstrip unless exc.nil?
+		begin
+			act_exchanges << exc.lstrip.rstrip.encode("ASCII") unless exc.nil?
+		rescue
+			p "error"
+		end
 	end
 	corpus << act_exchanges unless act_exchanges.size == 0
 end
